@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Norzone : guides pratiques du quotidien</title>
+<style>
+:root{--bg:#EAF4FF;--card:#fff;--ink:#12304F;--mut:#4A6078;--acc:#FFB02E;--line:#CFE0F2;--brand:#1F6FD6;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1B27;--card:#172636;--ink:#EAF0F5;--mut:#A3B4C4;--line:#2A3E52;--brand:#6CB4FF;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1B27;--card:#172636;--ink:#EAF0F5;--mut:#A3B4C4;--line:#2A3E52;--brand:#6CB4FF;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;top:0!important}
+.skiptranslate iframe,.goog-te-banner-frame{display:none!important}
+#gt{position:absolute;left:-9999px}
+.w{max-width:1000px;margin:0 auto;padding:0 20px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0;flex-wrap:wrap;gap:10px}
+.brand{font-weight:800;font-size:1.4rem}
+h1{font-size:clamp(2.2rem,7vw,4.2rem);line-height:1.05;margin:30px 0 14px;letter-spacing:-.02em;max-width:15ch}
+h2{font-size:1.6rem;margin:0 0 14px}
+.lead{color:var(--mut);font-size:1.15rem;max-width:52ch}
+.btn{display:inline-block;border:0;cursor:pointer;background:var(--acc);color:#14293D;font:inherit;font-weight:800;text-decoration:none;padding:11px 20px;border-radius:999px}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn:focus-visible,input:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+section{padding:36px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px 20px 20px 20px;padding:22px;display:flex;flex-direction:column;box-shadow:0 6px 18px #1f6fd614}
+.card h3{margin:8px 0;font-size:1.15rem;line-height:1.3}
+.card p{color:var(--mut);margin:0 0 16px;font-size:.96rem}
+.price{font-size:2rem;font-weight:800;line-height:1;color:var(--brand)}
+.card .acts{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+.quiz{background:var(--ink);color:var(--bg);border-radius:22px;padding:28px}
+.quiz .opts{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+.quiz .btn.alt{color:var(--bg);border-color:#ffffff55}
+dialog{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:22px}
+dialog::backdrop{background:#0008}
+#cart{border-radius:18px;width:min(560px,92vw)}
+#menu{margin:0 auto 0 0;height:100dvh;max-height:none;width:min(340px,88vw);border-radius:0 18px 18px 0;padding-top:max(22px,env(safe-area-inset-top))}
+#menu a.m{display:block;padding:11px 0;color:var(--ink);text-decoration:none;font-weight:600;border-bottom:1px solid var(--line)}
+#menu input{width:100%;padding:10px 14px;border-radius:999px;border:2px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;margin:8px 0}
+#langs{max-height:240px;overflow-y:auto;border:1px solid var(--line);border-radius:12px}
+#langs button{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);color:var(--ink);font:inherit;padding:9px 14px;cursor:pointer}
+#langs button:hover{background:var(--bg)}
+#det,#lg{border-radius:18px;width:min(680px,94vw);max-height:90dvh}
+#lg{width:min(420px,92vw)}
+.pb{background:var(--bg);border-radius:12px;padding:12px 14px;margin:10px 0}
+.pb b{display:block}
+.qa{border-top:1px solid var(--line);padding:10px 0}
+.fly{position:fixed;z-index:9999;font-size:1.6rem;pointer-events:none}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;z-index:9999;font-weight:600}
+.line{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.line small{display:block;color:var(--mut)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--mut);font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="w">
+<nav>
+<button class="btn alt" id="menuBtn" aria-label="Ouvrir le menu">☰ Menu</button>
+<span class="brand">Norzone</span>
+<span style="display:flex;gap:8px;flex-wrap:wrap">
+<button class="btn alt" id="themeBtn" aria-label="Changer entre thème clair et sombre">🌓</button>
+<button class="btn alt" id="langBtn" aria-label="Choisir la langue">🌐 Langue</button>
+<button class="btn alt" id="cartBtn" aria-label="Ouvrir le panier">🛒 Panier (<span id="n">0</span>)</button>
+</span>
+</nav>
+<header>
+<h1>Des guides clairs pour les soucis du quotidien.</h1>
+<p class="lead">Budget, démarches, emploi, bébé, enfants. Courtes, concrètes, pensées pour la Belgique francophone.</p>
+</header>
+<section id="quizz">
+<div class="quiz">
+<h2>Quel est ton plus gros souci en ce moment ?</h2>
+<p>Un clic, un conseil gratuit, et la formation qui va avec.</p>
+<div class="opts" id="opts"></div>
+<div id="res" aria-live="polite"></div>
+</div>
+</section>
+<section id="formations"><h2>Les formations</h2><div class="grid" id="grid"></div></section>
+<footer>© 2026 Norzone · Remplacez cette ligne par vos mentions légales (nom, numéro d’entreprise, adresse).</footer>
+</div>
+
+<dialog id="menu">
+<p class="brand">Norzone</p>
+<a class="m" href="#formations">Les formations</a>
+<a class="m" href="#" id="mCart">Mon panier</a>
+<a class="m" href="#" id="mAcc" hidden target="_blank" rel="noopener noreferrer">Mon compte et mes achats</a>
+<a class="m" href="#" id="mLang">🌐 Langue</a>
+<p><button class="btn alt" id="mClose">Fermer</button></p>
+</dialog>
+
+<dialog id="lg">
+<h2>Langue</h2>
+<input id="ls" type="search" placeholder="Rechercher une langue" aria-label="Rechercher une langue">
+<div id="langs"></div>
+<p><button class="btn alt" id="lgClose">Fermer</button></p>
+</dialog>
+
+<dialog id="det"><div id="detc"></div></dialog>
+
+<dialog id="cart">
+<h2>Votre panier</h2>
+<div id="lines" aria-live="polite"></div>
+<p><b>Total : <span id="tot">0,00 €</span></b></p>
+<p style="color:var(--mut);font-size:.9rem">Le paiement et la saisie de l’adresse se font sur la page sécurisée de la plateforme de paiement. Norzone ne voit ni ne stocke vos données bancaires.</p>
+<p>
+<button class="btn alt" id="clear">Vider le panier</button>
+<button class="btn alt" id="close">Fermer</button>
+</p>
+</dialog>
+<div id="gt"></div>
+
+<script>
+/* ===== VOS RÉGLAGES : modifiez ici ===== */
+var CONFIG = {
+  accountLink: "",
+  paypalMe: "",
+  products: [
+    {id:"budget",   name:"Vivre bien avec un petit budget en Belgique", price:19,    desc:"Énergie, courses, aides oubliées, budget simple.", tip:"Note chaque dépense pendant 7 jours : tu verras où part ton argent.", link:""},
+    {id:"occasion", name:"Vendre ses affaires d’occasion comme un pro", price:14,    desc:"Photos, prix, envoi, arnaques, impôts.", tip:"Photographie en lumière naturelle et montre les défauts.", link:""},
+    {id:"papiers",  name:"Papiers et démarches sans stress",            price:19,    desc:"Courriers officiels et modèles de lettres.", tip:"Garde un classeur par année et photographie chaque courrier officiel.", link:""},
+    {id:"job",      name:"Trouver un job sans diplôme ni réseau",       price:14,    desc:"CV, lettre, intérim, entretien.", tip:"Un CV tient sur une page : adapte le titre à chaque offre.", link:""},
+    {id:"ia",       name:"L’IA au quotidien, sans être technique",      price:19,    desc:"Mails, CV, courriers, pièges à éviter.", tip:"Ne mets jamais de données personnelles sensibles dans un outil d’IA.", link:""},
+    {id:"bebe",     name:"Nouveau-né : le guide pratique de A à Z",     price:24,    desc:"Organisation, matériel, budget. Pour la santé, voyez votre pédiatre.", tip:"Pour toute question de santé, appelez votre pédiatre ou votre médecin.", link:""},
+    {id:"enfant",   name:"Éduquer son enfant au quotidien",             price:24,    desc:"Cadre, colères, écrans, devoirs.", tip:"Félicite le comportement précis plutôt que l’enfant en général.", link:""},
+    {id:"pack4",    name:"Pack de 4 formations au choix",               price:79.99, desc:"Quatre formations parmi les sept.", tip:"", link:""}
+  ],
+  quizLabels: {budget:"Mon budget", occasion:"Vendre mes affaires", papiers:"Mes papiers", job:"Trouver un job", ia:"L’IA", bebe:"Mon bébé", enfant:"Mes enfants"},
+  langs: [["fr","Français"],["en","English"],["nl","Nederlands"],["de","Deutsch"],["es","Español"],["it","Italiano"],["pt","Português"],["ar","العربية"],["tr","Türkçe"],["ru","Русский"],["uk","Українська"],["pl","Polski"],["ro","Română"],["zh-CN","中文 (简体)"],["zh-TW","中文 (繁體)"],["ja","日本語"],["ko","한국어"],["hi","हिन्दी"],["bn","বাংলা"],["ur","اردو"],["fa","فارسی"],["he","עברית"],["el","Ελληνικά"],["sv","Svenska"],["da","Dansk"],["no","Norsk"],["fi","Suomi"],["cs","Čeština"],["sk","Slovenčina"],["hu","Magyar"],["bg","Български"],["hr","Hrvatski"],["sr","Српски"],["sl","Slovenščina"],["lt","Lietuvių"],["lv","Latviešu"],["et","Eesti"],["id","Bahasa Indonesia"],["ms","Bahasa Melayu"],["th","ไทย"],["vi","Tiếng Việt"],["tl","Filipino"],["sw","Kiswahili"],["af","Afrikaans"],["sq","Shqip"],["am","አማርኛ"],["hy","Հայերեն"],["az","Azərbaycanca"],["eu","Euskara"],["ca","Català"],["gl","Galego"],["ga","Gaeilge"],["is","Íslenska"],["ka","ქართული"],["kk","Қазақша"],["mk","Македонски"],["mn","Монгол"],["ne","नेपाली"],["pa","ਪੰਜਾਬੀ"],["si","සිංහල"],["ta","தமிழ்"],["te","తెలుగు"],["uz","Oʻzbekcha"],["cy","Cymraeg"]]
+};
+/* ===== FIN DES RÉGLAGES ===== */
+
+var $ = function(s){return document.querySelector(s)};
+var cart = [];
+try { cart = JSON.parse(localStorage.getItem("nz_cart") || "[]"); if (!Array.isArray(cart)) cart = []; } catch(e) { cart = []; }
+function save(){ try { localStorage.setItem("nz_cart", JSON.stringify(cart)); } catch(e) {} }
+function fmt(n){ return (Math.round(n * 100) / 100).toFixed(2).replace(".", ",") + " €"; }
+function prod(id){ return CONFIG.products.filter(function(p){return p.id===id})[0]; }
+function payLink(p){ return p.link || (CONFIG.paypalMe ? CONFIG.paypalMe.replace(/\/$/,"") + "/" + p.price + "EUR" : ""); }
+function add(id){ if(cart.indexOf(id)<0) cart.push(id); save(); draw(); }
+function del(id){ cart = cart.filter(function(x){return x!==id}); save(); draw(); }
+
+function draw(){
+  var tot = 0, h = "";
+  cart = cart.filter(function(id){return prod(id)});
+  cart.forEach(function(id){
+    var p = prod(id), l = payLink(p); tot += p.price;
+    h += '<div class="line"><div>' + p.name + '<small>' + fmt(p.price) + '</small></div><div class="acts">' +
+      (l
+        ? '<a class="btn" rel="noopener noreferrer" target="_blank" href="' + l + '">Commander</a>'
+        : '<button class="btn alt" data-demo="' + id + '">Paiement (démo)</button>') +
+      '<button class="btn alt" data-del="' + id + '">Retirer</button></div></div>';
+  });
+  $("#n").textContent = cart.length;
+  $("#lines").innerHTML = h || "<p>Votre panier est vide.</p>";
+  $("#tot").textContent = fmt(tot);
+}
+
+$("#grid").innerHTML = CONFIG.products.map(function(p){
+  return '<article class="card"><div class="price">' + fmt(p.price) + '</div><h3>' + p.name + '</h3><p>' + p.desc +
+    '</p><div class="acts"><button class="btn alt" data-d="' + p.id + '">Voir le détail</button><button class="btn" data-add="' + p.id + '">Ajouter au panier</button></div></article>';
+}).join("");
+$("#opts").innerHTML = Object.keys(CONFIG.quizLabels).filter(prod).map(function(k){
+  return '<button class="btn alt" data-q="' + k + '">' + CONFIG.quizLabels[k] + '</button>';
+}).join("");
+
+function langList(q){
+  q = (q || "").toLowerCase();
+  $("#langs").innerHTML = CONFIG.langs.filter(function(l){return l[1].toLowerCase().indexOf(q) > -1 || l[0].toLowerCase().indexOf(q) > -1})
+    .map(function(l){return '<button data-l="' + l[0] + '">' + l[1] + '</button>'}).join("") || "<p style='padding:10px'>Aucune langue trouvée.</p>";
+}
+function setLang(code){
+  var c = code === "fr" ? "/fr/fr" : "/fr/" + code;
+  document.cookie = "googtrans=" + c + "; path=/";
+  document.cookie = "googtrans=" + c + "; path=/; domain=" + location.hostname;
+  location.reload();
+}
+langList("");
+$("#ls").addEventListener("input", function(e){ langList(e.target.value); });
+if (CONFIG.accountLink) { $("#mAcc").hidden = false; $("#mAcc").href = CONFIG.accountLink; }
+
+document.addEventListener("click", function(e){
+  var t = e.target;
+  if (t.dataset.add) add(t.dataset.add);
+  if (t.dataset.del) del(t.dataset.del);
+  if (t.dataset.l) setLang(t.dataset.l);
+  if (t.dataset.demo) info("Paiement (démo)", "<p>Ce bouton remplace le lien de paiement tant que vous n’avez pas configuré <code>paypalMe</code> ou les liens de vos produits. En production, il pointera vers votre page de paiement sécurisée.</p>");
+  if (t.dataset.q) {
+    var p = prod(t.dataset.q);
+    $("#res").innerHTML = '<p><b>Conseil gratuit :</b> ' + p.tip + '</p><p>Pour aller plus loin : ' + p.name + ' (' + fmt(p.price) + ')</p>' +
+      '<button class="btn" data-d="' + p.id + '">Voir la formation</button> ' +
+      '<button class="btn alt" data-add="' + p.id + '">Ajouter au panier</button>';
+  }
+  if (t.id === "mLang") { e.preventDefault(); $("#menu").close(); openLang(); }
+  else if (t.closest && t.closest("#menu a.m[href^='#']")) $("#menu").close();
+});
+$("#menuBtn").addEventListener("click", function(){ $("#menu").showModal(); });
+$("#mClose").addEventListener("click", function(){ $("#menu").close(); });
+$("#cartBtn").addEventListener("click", function(){ $("#cart").showModal(); });
+$("#mCart").addEventListener("click", function(e){ e.preventDefault(); $("#menu").close(); $("#cart").showModal(); });
+$("#close").addEventListener("click", function(){ $("#cart").close(); });
+$("#clear").addEventListener("click", function(){ cart = []; save(); draw(); });
+draw();
+
+var DETAILS = {
+  budget:{pb:[["Les factures d’énergie pèsent trop lourd.","Comparez les fournisseurs sur le comparateur de votre région (VREG, CWaPE ou Brugel) et relevez vos index régulièrement."],["Je ne sais pas où part mon argent.","Notez chaque dépense pendant un mois et classez-les : indispensable, utile, plaisir."],["Je n’ose pas demander d’aides.","Renseignez-vous auprès du CPAS de votre commune et de votre mutualité : des aides existent selon la situation."]],faq:[["Est-ce adapté avec de petits revenus ?","Oui, les conseils partent de petits gestes qui ne coûtent rien."],["Les informations sont-elles à jour ?","Les montants et les règles changent : chaque guide indique les points à revérifier sur les sites officiels."]]},
+  occasion:{pb:[["Je ne sais pas par où commencer.","Triez avec trois questions : est-ce que je m’en sers, est-ce en bon état, et quelqu’un en voudrait-il à moitié prix ?"],["J’ai peur des arnaques.","Payez et encaissez uniquement via la plateforme. Gardez vos photos avant envoi et la preuve de dépôt."],["Dois-je déclarer mes ventes ?","La vente occasionnelle d’objets personnels n’est en général pas imposable. Au-delà de 30 ventes ou 2 000 € par an, la plateforme transmet vos données au fisc. Vérifiez sur le site du SPF Finances."]],faq:[["Quels sont les frais ?","Sur Vinted, pas de commission pour le vendeur : les frais de protection sont payés par l’acheteur. À revérifier sur le site de la plateforme."],["Vinted ou 2ememain ?","Vinted convient surtout aux vêtements et petits objets, 2ememain aux objets volumineux."]]},
+  papiers:{pb:[["Je reçois un courrier que je ne comprends pas.","Repérez l’expéditeur, la date limite et ce qu’on vous demande. Répondez par écrit, datez et gardez une copie."],["J’ai peur de rater une date limite.","Notez chaque échéance dans un agenda dès l’ouverture du courrier."],["Je ne sais pas à qui m’adresser.","Commune, CPAS, mutualité ou service public concerné : le guide indique le bon interlocuteur selon la situation."]],faq:[["Remplace-t-il un comptable ou un avocat ?","Non. Pour les situations complexes, adressez-vous à un professionnel."],["Y a-t-il des modèles de lettres ?","Oui, des modèles à adapter à votre situation."]]},
+  job:{pb:[["Je n’ai pas de diplôme.","Mettez en avant vos expériences, vos compétences et votre disponibilité."],["Mon CV reste sans réponse.","Gardez une page, adaptez le titre à chaque offre et reprenez les mots de l’annonce."],["Les entretiens me stressent.","Préparez trois exemples concrets et entraînez-vous à voix haute."]],faq:[["Cette formation garantit-elle un emploi ?","Non, aucune formation ne peut le garantir. Elle augmente vos chances."],["Parle-t-elle de l’intérim ?","Oui : comment cela fonctionne et comment s’inscrire dans une agence."]]},
+  ia:{pb:[["Je ne sais pas par où commencer.","Commencez par une tâche simple, par exemple reformuler un mail."],["Je crains les erreurs de l’IA.","Relisez toujours et vérifiez les faits importants : l’IA peut se tromper."],["Que puis-je écrire dans un outil d’IA ?","Évitez les données personnelles sensibles : identité, santé, mots de passe, numéros de compte."]],faq:[["Faut-il être technique ?","Non, le guide est écrit pour des débutants."],["Faut-il payer un abonnement ?","Le guide privilégie des outils gratuits quand c’est possible."]]},
+  bebe:{pb:[["Je ne sais pas quoi acheter.","Distinguez l’indispensable de ce qui peut attendre. Beaucoup d’articles se trouvent d’occasion."],["Je me sens dépassé·e par l’organisation.","Installez des routines simples pour les premières semaines, partagez les tâches et acceptez l’aide de vos proches."],["J’ai des questions de santé.","Ce guide ne remplace pas un avis médical. Contactez votre pédiatre ou votre médecin, ou la consultation de l’ONE ou de Kind en Gezin."]],faq:[["Donne-t-il des conseils médicaux ?","Non, uniquement des conseils pratiques d’organisation, de matériel et de budget."],["Convient-il à un premier enfant ?","Oui, il est pensé pour les nouveaux parents."]]},
+  enfant:{pb:[["Les colères reviennent chaque jour.","Restez calme, nommez l’émotion, posez une limite claire et parlez de l’épisode après la crise."],["Les écrans prennent trop de place.","Fixez des règles simples et prévisibles, avec des moments sans écran."],["Les devoirs finissent en conflit.","Même heure, même endroit, pauses courtes."]],faq:[["Remplace-t-il un professionnel ?","Non. En cas de difficulté importante, parlez-en à votre médecin, à l’école ou à un psychologue."],["Faut-il beaucoup de temps ?","Les conseils sont courts et applicables dès aujourd’hui."]]},
+  pack4:{pb:[],faq:[["Comment choisir mes quatre formations ?","Après l’achat, vous indiquez vos quatre choix parmi les sept et vous recevez les accès."]]}
+};
+function info(t,h){ $("#detc").innerHTML = "<h2>" + t + "</h2>" + h + '<p><button class="btn alt" data-x="1" aria-label="Fermer la fenêtre">Fermer</button></p>'; $("#det").showModal(); }
+function show(id){
+  var p = prod(id), d = DETAILS[id] || {}, h = '<div class="price">' + fmt(p.price) + '</div><p>' + p.desc + '</p>';
+  if (d.pb && d.pb.length) h += "<h3>Problèmes courants et solutions</h3>" + d.pb.map(function(x){return '<div class="pb"><b>' + x[0] + '</b>' + x[1] + '</div>'}).join("");
+  if (d.faq && d.faq.length) h += "<h3>Questions fréquentes</h3>" + d.faq.map(function(x){return '<div class="qa"><b>' + x[0] + '</b><br>' + x[1] + '</div>'}).join("");
+  h += '<p><button class="btn" data-add="' + id + '">🛒 Ajouter au panier</button></p>';
+  info(p.name, h);
+}
+document.addEventListener("click", function(e){
+  var t = e.target;
+  if (t.dataset.d) show(t.dataset.d);
+  if (t.dataset.add) { var r = t.getBoundingClientRect(); if ($("#det").open) $("#det").close(); fly(r); }
+  if (t.dataset.x) $("#det").close();
+  if (t.tagName === "DIALOG" && e.target === t) {
+    var q = t.getBoundingClientRect();
+    if (e.clientX < q.left || e.clientX > q.right || e.clientY < q.top || e.clientY > q.bottom) t.close();
+  }
+});
+function toast(m){
+  var d = document.createElement("div"); d.className = "toast"; d.textContent = m; d.setAttribute("role", "status");
+  document.body.appendChild(d); setTimeout(function(){ d.remove(); }, 1600);
+}
+function fly(a){
+  var c = $("#cartBtn"), b = c.getBoundingClientRect();
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var d = document.createElement("div"); d.className = "fly"; d.textContent = "🛒";
+    d.style.left = (a.left + a.width / 2) + "px"; d.style.top = a.top + "px"; document.body.appendChild(d);
+    d.animate([{transform: "translate(0,0) scale(1)", opacity: 1}, {transform: "translate(" + (b.left + b.width / 2 - a.left - a.width / 2) + "px," + (b.top - a.top) + "px) scale(.4)", opacity: .3}], {duration: 700, easing: "ease-in"}).onfinish = function(){ d.remove(); };
+    c.animate([{transform: "scale(1)"}, {transform: "scale(1.2)"}, {transform: "scale(1)"}], {duration: 400, delay: 650});
+  }
+  toast("Ajouté au panier ✓");
+}
+try { var th = localStorage.getItem("nz_theme"); if (th) document.documentElement.setAttribute("data-theme", th); } catch(e) {}
+$("#themeBtn").addEventListener("click", function(){
+  var root = document.documentElement;
+  var cur = root.getAttribute("data-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  var next = cur === "dark" ? "light" : "dark";
+  root.setAttribute("data-theme", next);
+  try { localStorage.setItem("nz_theme", next); } catch(e) {}
+});
+function openLang(e){ if (e) e.preventDefault(); $("#lg").showModal(); }
+$("#langBtn").addEventListener("click", openLang);
+$("#lgClose").addEventListener("click", function(){ $("#lg").close(); });
+$("#mAcc").addEventListener("click", function(e){
+  if (!CONFIG.accountLink) { e.preventDefault(); info("Mon compte", "<p>Les comptes clients et l’historique des achats sont gérés par la plateforme de paiement. Le lien de connexion sera disponible ici dès que le site sera relié à la plateforme.</p>"); }
+});
+function gt(){ new google.translate.TranslateElement({pageLanguage:"fr"}, "gt"); }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=gt" async></script>
+</body>
+</html>
